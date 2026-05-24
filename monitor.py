@@ -29,7 +29,6 @@ headers = {"Authorization": f"Bearer {BEARER}"}
 
 for username in ACCOUNTS:
     print(f"\n--- 处理账号: @{username} ---")
-    # 获取用户ID
     r = requests.get(f"https://api.twitter.com/2/users/by/username/{username}", headers=headers)
     print(f"获取用户ID 状态: {r.status_code}")
     if r.status_code != 200:
@@ -37,7 +36,6 @@ for username in ACCOUNTS:
     
     user_id = r.json()["data"]["id"]
     
-    # 获取最新推文
     r = requests.get(f"https://api.twitter.com/2/users/{user_id}/tweets?max_results=3", headers=headers)
     print(f"获取推文 状态: {r.status_code}")
     
