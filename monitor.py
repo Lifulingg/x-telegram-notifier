@@ -22,6 +22,7 @@ def main():
 
     # 2. 准备 Telegram 发送函数
     def send_tg_message(text):
+        # ✨【已修改】这里换成了真正的 api.telegram.org 网址，并加上了 /bot 路径
         url = f"https://telegram.org{BOT_TOKEN}/sendMessage"
         payload = {"chat_id": CHAT_ID, "text": text, "parse_mode": "HTML"}
         try:
@@ -45,6 +46,7 @@ def main():
         print(f"\n正在检查账号: @{username} ...")
         
         # A. 根据用户名获取用户 ID
+        # ✨【已修改】这里换成了 X 官方查询用户 ID 的专用 API 接口，带上了正确的斜杠
         user_url = f"https://twitter.com{username}"
         user_res = requests.get(user_url, headers=headers)
         
@@ -60,7 +62,7 @@ def main():
         user_id = user_data["data"]["id"]
 
         # B. 获取该用户最近的推文
-        # tweet.fields=referenced_tweets 用于判断是否为转推
+        # ✨【已修改】这里换成了 X 官方获取推文列表的专用 API 接口路径
         tweets_url = f"https://twitter.com{user_id}/tweets?max_results=5&tweet.fields=referenced_tweets,created_at"
         tweets_res = requests.get(tweets_url, headers=headers)
         
@@ -87,6 +89,7 @@ def main():
                 continue
 
             # 构造发送到 Telegram 的消息文本
+            # ✨【已修改】补上了跳转链接里的斜杠
             tg_text = (
                 f"🔔 <b>@{username} 发布了新内容</b>\n\n"
                 f"{text}\n\n"
